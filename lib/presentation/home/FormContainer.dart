@@ -27,51 +27,76 @@ class FormContainer extends StatelessWidget {
             color: AppColors.deepOrange,
             radius: AppSize.s12,
             // borderColor:AppColors.deepOrange ,
-            widget: Expanded(
-              child: Column(
-                children: [
-                  CustomContainer(
-                    color: AppColors.deepBlue,
-                    borderColor:AppColors.deepBlue ,
-                    radius: AppSize.s12,
-                    padding: AppPadding.p20,
-                    widget: Column(
-                      children: [
-                        //select city
-                        CustomContainer(
-                            color: AppColors.white,
-                            radius: AppSize.s12,
-                            padding: AppPadding.p4,
-                            widget: CustomTextFormField(hint: TextApp.selectCity,validator: (value){
-                              return null;
-                            },)),
-                        const SizedBox(height: AppSize.s10,),
-                        //date range
-                        CustomContainer(
+            widget: Column(
+              children: [
+                CustomContainer(
+                  color: AppColors.deepBlue,
+                  borderColor:AppColors.deepBlue ,
+                  radius: AppSize.s12,
+                  padding: AppPadding.p20,
+                  widget: Column(
+                    children: [
+                      //select city
+                      CustomContainer(
                           color: AppColors.white,
                           radius: AppSize.s12,
                           padding: AppPadding.p4,
-                          widget: CustomContainer(
-                            color: AppColors.white,
-                            radius: AppSize.s12,
-                            borderColor: AppColors.blue,
-                            padding: AppPadding.p8,
-                            widget: InkWell(
-                              onTap: (){
-                                cubit.selectDateTime(context);
-                              },
-                              child: Row(
-                                children: [
-                                   CustomText(text:cubit.pickedDate,color: AppColors.deepBlue,),
-                                  const Spacer(),
-                                  Icon(Icons.close,color: AppColors.lightBlue,),
-                                ],
-                              ),
+                          widget: CustomTextFormField(hint: TextApp.selectCity,validator: (value){
+                            return null;
+                          },)),
+                      const SizedBox(height: AppSize.s10,),
+                      //date range
+                      CustomContainer(
+                        color: AppColors.white,
+                        radius: AppSize.s12,
+                        padding: AppPadding.p4,
+                        widget: CustomContainer(
+                          color: AppColors.white,
+                          radius: AppSize.s12,
+                          borderColor: AppColors.blue,
+                          padding: AppPadding.p8,
+                          widget: InkWell(
+                            onTap: (){
+                              cubit.selectDateTime(context);
+                            },
+                            child: Row(
+                              children: [
+                                 CustomText(text:cubit.pickedDate,color: AppColors.deepBlue,),
+                                const Spacer(),
+                                Icon(Icons.close,color: AppColors.lightBlue,),
+                              ],
                             ),
-                          ),),
-                        const SizedBox(height: AppSize.s10,),
-                        //select nationality
-                        CustomContainer(
+                          ),
+                        ),),
+                      const SizedBox(height: AppSize.s10,),
+                      //select nationality
+                      CustomContainer(
+                        color: AppColors.white,
+                        radius: AppSize.s12,
+                        padding: AppPadding.p12,
+                        widget: InkWell(
+                          onTap: (){
+                            // cubit.dropDownList();
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  content: cubit.dropDownList(),
+                                );
+                              },
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              CustomText(text:cubit.selectNationality,color: AppColors.deepBlue,),
+                              const Spacer(),
+                              Icon(Icons.arrow_downward,color: AppColors.lightBlue,),
+                            ],
+                          ),
+                        )),
+                      const SizedBox(height: AppSize.s10,),
+                      //rooms
+                      CustomContainer(
                           color: AppColors.white,
                           radius: AppSize.s12,
                           padding: AppPadding.p12,
@@ -89,59 +114,32 @@ class FormContainer extends StatelessWidget {
                             },
                             child: Row(
                               children: [
-                                CustomText(text:cubit.selectNationality,color: AppColors.deepBlue,),
+                                const CustomText(text:TextApp.listOfChoice,color: AppColors.deepBlue,),
                                 const Spacer(),
                                 Icon(Icons.arrow_downward,color: AppColors.lightBlue,),
                               ],
                             ),
                           )),
-                        const SizedBox(height: AppSize.s10,),
-                        //rooms
-                        CustomContainer(
-                            color: AppColors.white,
-                            radius: AppSize.s12,
-                            padding: AppPadding.p12,
-                            widget: InkWell(
-                              onTap: (){
-                                // cubit.dropDownList();
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      content: cubit.dropDownList(),
-                                    );
-                                  },
-                                );
-                              },
-                              child: Row(
-                                children: [
-                                  const CustomText(text:TextApp.listOfChoice,color: AppColors.deepBlue,),
-                                  const Spacer(),
-                                  Icon(Icons.arrow_downward,color: AppColors.lightBlue,),
-                                ],
-                              ),
-                            )),
-                      ],
-                    ),),
-                  GestureDetector(
-                    onTap: (){
-                      // Open the bottom sheet on button press
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (BuildContext context) => const BottomSheetScreen(),
-                      );
-                    },
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CustomText(text: TextApp.findHotels,color: AppColors.white,),
-                        SizedBox(width: AppSize.s20,),
-                        Icon(Icons.search_outlined,color: AppColors.white,size: AppSize.s40,),
-                      ],
-                    ),
+                    ],
+                  ),),
+                GestureDetector(
+                  onTap: (){
+                    // Open the bottom sheet on button press
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context) => const BottomSheetScreen(),
+                    );
+                  },
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CustomText(text: TextApp.findHotels,color: AppColors.white,),
+                      SizedBox(width: AppSize.s20,),
+                      Icon(Icons.search_outlined,color: AppColors.white,size: AppSize.s40,),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           );
         },
